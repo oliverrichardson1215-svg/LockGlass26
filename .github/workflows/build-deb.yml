@@ -1,0 +1,38 @@
+name: Build deb
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+      - name: Install Theos
+        env:
+          THEOS: ${{ github.workspace }}/.theos
+        run: |
+          bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
+
+      - name: Build package
+        env:
+          THEOS: ${{ github.workspace }}/.theos
+        run: |
+          make clean package FINALPACKAGE=1
+
+      - name: Upload deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: LockGlass26-deb
+          path: packages/*.deb
+          if-no-files-found: error
