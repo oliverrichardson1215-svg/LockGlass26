@@ -1,0 +1,9 @@
+Package: com.zm.liquidlock26
+Name: LockGlass26
+Version: 0.1.0
+Architecture: iphoneos-arm64
+Description: iOS 26-inspired liquid glass lock screen clock for rootless jailbreaks.
+Maintainer: Zm
+Author: Zm
+Section: Tweaks
+Depends: mobilesubstrate, preferenceloader, firmware (>= 16.0)
